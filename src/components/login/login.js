@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const StyledDiv = styled.div`
   display: flex;
@@ -60,6 +61,21 @@ class Login extends Component {
 
   handleLogin = () => {
     const { email, password } = this.state;
+    axios.post('https://api-mercadona-b52fc78efdef.herokuapp.com/api/login/login', {
+      email,
+      password,
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          // L'authentification a réussi, rediriger vers "/admin"
+          this.props.history.push('/admin-board');
+        } else {
+          // L'authentification a échoué, gérer l'échec (par exemple, afficher un message d'erreur)
+        }
+      })
+      .catch((error) => {
+        // Gérer les erreurs de réseau ou autres
+      });
   }
 
   render() {
